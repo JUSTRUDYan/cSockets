@@ -1,2 +1,2 @@
 # OwnWebServer
- web server developing using "https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa" doc
+test project "introdaction in microserivce and sockets" using C and <sys/socket.h> for linux/macOS
