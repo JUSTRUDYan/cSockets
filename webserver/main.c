@@ -20,8 +20,20 @@ std::vector<ClientInfo> clients;
 
 void *responseMessage(void *arg) {
     int client_socket = *((int *)arg);
-    const char *message = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html><body><h1>Hello, World!</h1></body></html>\n";
-    send(client_socket, message, strlen(message), 0);
+
+    // Створення JSON об'єкта
+    struct json_object *json_obj = json_object_new_object();
+    json_object_object_add(json_obj, "message", json_object_new_string("Hello, World!"));
+    const char *json_str = json_object_to_json_string(json_obj);
+
+    // Формування HTTP відповіді з JSON даними
+    const char *http_response = "HTTP/1.1 200 OK\nContent-Type: application/json\n\n";
+    send(client_socket, http_response, strlen(http_response), 0);
+    send(client_socket, json_str, strlen(json_str), 0);
+
+    // Звільнення пам'яті від JSON об'єкта
+    json_object_put(json_obj);
+
     close(client_socket);
     return NULL;
 }
